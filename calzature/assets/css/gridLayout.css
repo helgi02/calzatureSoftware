@@ -1,0 +1,58 @@
+.imageDiv {
+  padding: 1em 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.productColumn {
+  height: 20em;
+  margin: .5em;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px;
+}
+
+img {
+  object-fit: cover;
+  max-width: 100%;
+  width: 100%;
+}
+
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-direction: row;
+  margin-top: 0;
+  margin-right: 0;
+  flex-wrap: wrap;
+}
+
+p {
+  padding: 12px 15px 16px;
+  margin: 0;
+}
+
+.productColumn:hover {
+  background-color: var(--bs-primary);
+  cursor: pointer;
+  box-shadow: 0 0 10px #b3b3b3;
+}
+
+.divPrezzo {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.elementsContainer {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2.5%;
+  margin-bottom: 10em;
+}
+

@@ -1,0 +1,256 @@
+body {
+  display: block;
+  position: relative;
+  background-color: rgba(238,238,238,0.96);
+}
+
+/* .box {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+} */
+
+/* Background circles start */
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(120deg, var(--bs-primary), rgb(126,103,81));
+}
+
+.circles {
+  position: absolute;
+  height: 520px;
+  width: 700px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.circle-1 {
+  height: 450px;
+  width: 450px;
+  top: 90px;
+  left: -50px;
+  opacity: 0.8;
+  animation-timing-function: cubic-bezier(0.54, 0.085, 0.5, 0.92);
+  animation-iteration-count: infinite;
+  animation-name: float;
+  -webkit-animation-name: float;
+  animation-duration: 6s;
+  -webkit-animation-duration: 6s;
+  -webkit-animation-delay: 2.5s;
+  animation-delay: 2.5s;
+  animation-direction: alternate;
+}
+
+.circle-2 {
+  height: 340px;
+  width: 340px;
+  bottom: 83px;
+  right: -101px;
+  opacity: 0.8;
+  animation-timing-function: cubic-bezier(0.54, 0.085, 0.5, 0.92);
+  animation-iteration-count: infinite;
+  animation-name: float;
+  -webkit-animation-name: float;
+  animation-duration: 6s;
+  -webkit-animation-duration: 6s;
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+  animation-direction: alternate;
+}
+
+/* Background circles end */
+
+/* ANIMATIONS */
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0% {
+    -webkit-transform: rotateX(0deg) translateY(0px);
+    -moz-transform: rotateX(0deg) translateY(0px);
+    -ms-transform: rotateX(0deg) translateY(0px);
+    -o-transform: rotateX(0deg) translateY(0px);
+    transform: rotateX(0deg) translateY(0px);
+  }
+  50% {
+    -webkit-transform: rotateX(0deg) translateY(1px) translateX(5px);
+    -moz-transform: rotateX(0deg) translateY(10px) translateX(5px);
+    -ms-transform: rotateX(0deg) translateY(30px) translateX(5px);
+    -o-transform: rotateX(0deg) translateY(40px) translateX(5px);
+    transform: rotateX(0deg) translateY(10px) translateX(5px);
+  }
+  100% {
+    -webkit-transform: rotateX(0deg) translateY(0px) translateX(1px);
+    -moz-transform: rotateX(0deg) translateY(0px) translateX(1px);
+    -ms-transform: rotateX(0deg) translateY(0px) translateX(1px);
+    -o-transform: rotateX(0deg) translateY(0px) translateX(1px);
+    transform: rotateX(0deg) translateY(0px) translateX(1px);
+  }
+}
+
+.mdl {
+  height: auto;
+  width: 420px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 45%;
+  left: 50%;
+  transform: translate(-60%,-60%);
+}
+
+.mainContainer {
+  width: 31em;
+  top: 17%;
+  display: flex;
+  flex-direction: column;
+  height: 28em;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 30px #000;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.formWrapper {
+  height: inherit;
+  width: 100%;
+  border-left: 1px solid black;
+  overflow: hidden;
+}
+
+.imageContainer {
+  width: 50%;
+  height: inherit;
+}
+
+.inputField {
+  border: 1px solid transparent;
+  background: rgba(255,255,255,0.5);
+  border-radius: 20px;
+  outline: none;
+  margin: 1em 0;
+  transition: border-color 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+.inputField:hover {
+  border-image-slice: 1;
+  border-radius: 20px;
+  animation: color-border 1s linear normal;
+}
+
+@keyframes color-border {
+  0% {
+    border-image-source: linear-gradient(deg, rgba(34, 177, 76, 1) 20%, rgba(34, 177, 76, 0.6) 40%, rgba(34, 177, 76, 0.1) 60%, rgba(34, 177, 76, 0.6) 80%, rgba(34, 177, 76, 1) 100%);
+  }
+  25% {
+    border-image-source: linear-gradient( rgba(34, 177, 76, 0.6) 20%, rgba(34, 177, 76, 0.1) 40%, rgba(34, 177, 76, 0.6) 60%, rgba(34, 177, 76, 1) 80%, rgba(34, 177, 76, 0.6) 100%);
+  }
+  50% {
+    border-image-source: linear-gradient( rgba(34, 177, 76, 0.1) 20%, rgba(34, 177, 76, 0.6) 40%, rgba(34, 177, 76, 1) 60%, rgba(34, 177, 76, 0.6) 80%, rgba(34, 177, 76, 0.1) 100%);
+  }
+  75% {
+    border-image-source: linear-gradient(rgba(34, 177, 76, 0.6) 20%, rgba(34, 177, 76, 1) 40%, rgba(34, 177, 76, 0.6) 60%, rgba(34, 177, 76, 0.1) 80%, rgba(34, 177, 76, 0.6) 100%);
+  }
+  100% {
+    border-image-source: linear-gradient(rgba(34, 177, 76, 1) 20%, rgba(34, 177, 76, 0.6) 40%, rgba(34, 177, 76, 0.1) 60%, rgba(34, 177, 76, 0.6) 80%, rgba(34, 177, 76, 1) 100%);
+  }
+}
+
+.accessButton {
+  outline: none;
+  cursor: pointer!important;
+  border: none;
+  padding: 0.9rem 2rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  font-weight: 645;
+  font-size: 17px;
+  border-radius: 500px;
+  overflow: hidden;
+  background-color: rgb(98,84,69)!important;
+  color: ghostwhite;
+  left: 38%;
+  top: 9%;
+}
+
+.accessButton span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+}
+
+.accessButton:hover span {
+  color: black;
+}
+
+.accessButton::before, .accessButton::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.accessButton::before {
+  content: "";
+  background: var(--bs-secondary);
+  width: 120%;
+  left: -10%;
+  transform: skew(3deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.accessButton:hover::before {
+  transform: translate3d(100%, 0, 0);
+}
+
+form {
+  position: relative;
+  width: 39px;
+  background: var(--bs-gray-500);
+  border: none;
+  margin-top: -2.5em;
+}
+
+.form-control {
+  display: none;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 388;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--bs-gray-600);
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: 20px;
+  transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out;
+}
+

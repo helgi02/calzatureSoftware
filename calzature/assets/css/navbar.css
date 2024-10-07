@@ -1,0 +1,119 @@
+button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 20px;
+  width: 100%;
+}
+
+:is( .navbar, .dropdowns) {
+  position: fixed;
+  top: 0;
+}
+
+.navbar {
+  z-index: 1;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  height: 92px;
+  width: 95%;
+  background-color: var(--bs-primary)!important;
+  color: #f9f9f9;
+  border-radius: 0 0 10px 10px;
+}
+
+dl, ol, ul {
+  margin: 0;
+}
+
+ol, ul {
+  padding-left: 0;
+}
+
+li {
+  margin: 0.5em 0 0.5em 0.8em;
+  text-align: left;
+  font-size: 14px;
+}
+
+li:hover {
+  color: #40352ac4;
+}
+
+.list-container {
+  width: 117px;
+  position: absolute;
+  margin-top: 0.5em;
+  background-color: rgb(170, 164, 158);
+  border-radius: 12px;
+  margin-left: -0.9em;
+}
+
+.btn {
+  width: 117px;
+  color: black;
+  border-radius: 12px;
+  margin-right: 0.5em;
+}
+
+.btn:hover {
+  border: 1px solid var(--bs-navbar-disabled-color);
+  color: var(--bs-secondary-text-emphasis);
+  box-shadow: 0px 0px 14px #414141;
+}
+
+.accessLink {
+  color: black;
+}
+
+.fa {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 42.5px;
+  height: 42.5px;
+  position: absolute;
+  border-radius: 50%;
+  color: #000000;
+  text-align: center;
+  font-size: 1.2em;
+  transition: background-color 1s;
+  right: 7em;
+}
+
+.dropdown:hover {
+  background: #f9f9f9;
+  box-shadow: 0 0 18px #000000;
+  border-radius: 15px;
+}
+
+.inputSearch {
+  position: absolute;
+  right: -600px;
+  opacity: 0;
+  border-radius: 20px;
+  width: 16em;
+  line-height: 1.5;
+  font-size: 13px;
+  outline: none;
+  padding: 10px;
+  background: rgba(73,80,87,0.46);
+  transition: right 2s ease-in-out, opacity 2s ease-in-out;
+}
+
+.inputSearch.visible {
+  right: 135px;
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.fa-search:hover {
+  cursor: pointer;
+}
+

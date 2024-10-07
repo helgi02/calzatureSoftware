@@ -1,0 +1,118 @@
+.fa-pencil {
+  background-color: rgba(70,111,255,0.36);
+}
+
+.fa-trash-o {
+  background-color: rgba(255,134,134,0.67);
+}
+
+div.dataTables_filter input[type=search] {
+  margin-left: .5em;
+  display: inline-block;
+  width: 20em!important;
+  border-radius: 15px!important;
+  border: 1px solid #0000004f!important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+  margin: 0;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.paginate_button, .previous, .disabled, .next {
+  color: black;
+  text-decoration: none;
+  border: 1px solid inherit;
+  padding: 4px;
+}
+
+.current {
+  border: none;
+}
+
+.current:hover {
+  cursor: pointer;
+  color: rgb(61, 61, 61);
+}
+
+.previous:hover, .next:hover {
+  background-color: rgba(255,250,215,0.22);
+  border: 1px solid rgb(148, 144, 116);
+  cursor: pointer;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+  font-weight: normal;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.btn-primary {
+  --bs-btn-color: #000000;
+  --bs-btn-bg: rgba(221,221,221,0.25);
+  --bs-btn-border-color: rgb(221,221,221);
+  --bs-btn-hover-color: #000000;
+  --bs-btn-hover-bg: #F0F0F0;
+  --bs-btn-hover-border-color: #ECECEC;
+  --bs-btn-focus-shadow-rgb: 5,5,5;
+  --bs-btn-active-color: #000000;
+  --bs-btn-active-bg: #F3F3F3;
+  --bs-btn-active-border-color: #ECECEC;
+  --bs-btn-disabled-color: #000000;
+  --bs-btn-disabled-bg: rgba(221,221,221,0.25);
+  --bs-btn-disabled-border-color: rgba(221,221,221,0.25);
+}
+
+.visualize {
+  background-color: rgba(255, 193, 142, 0.479);
+  border: 1px solid rgba(255, 193, 142, 0.678);
+}
+
+.visualize:hover {
+  background-color: rgba(255, 193, 142, 0.726);
+  border: 1px solid rgba(255, 193, 142, 0.678);
+}
+
+.btn-primary:hover {
+  color: var(--bs-btn-hover-color);
+  background-color: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+}
+
+.table {
+  --bs-table-color-type: initial;
+  --bs-table-bg-type: initial;
+  --bs-table-color-state: initial;
+  --bs-table-bg-state: initial;
+  --bs-table-color: var(--bs-emphasis-color);
+  --bs-table-bg: var(--bs-body-bg);
+  --bs-table-border-color: var(--bs-border-color);
+  --bs-table-accent-bg: transparent;
+  --bs-table-striped-color: var(--bs-emphasis-color);
+  --bs-table-striped-bg: rgba(var(--bs-emphasis-color-rgb), 0.05);
+  --bs-table-active-color: var(--bs-emphasis-color);
+  --bs-table-active-bg: rgba(var(--bs-emphasis-color-rgb), 0.1);
+  --bs-table-hover-color: var(--bs-emphasis-color);
+  --bs-table-hover-bg: rgba(var(--bs-emphasis-color-rgb), 0.075);
+  width: 100%;
+  margin-bottom: 1rem;
+  vertical-align: top;
+}
+
+.dataTables_wrapper {
+  height: 90vh;
+}
+
+.noselect:hover {
+  background-color: var(--bs-primary);
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: var(--bs-primary);
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(255, 250, 215, 0.425);
+}
+

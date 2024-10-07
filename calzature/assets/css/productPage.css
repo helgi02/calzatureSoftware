@@ -1,0 +1,242 @@
+.descriptionContainer {
+  margin: 1em 0 1em 9em;
+  width: 40%;
+}
+
+/* From Uiverse.io by Cybercom682 */
+
+.number-control {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.number-left, .number-right {
+  content: attr(data-content);
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  width: 20px;
+  color: white;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 2em;
+  height: 2em;
+}
+
+.number-left:hover, .number-right:hover {
+  color: #ffffff;
+  background: #6d6d6d;
+}
+
+.number-quantity {
+  padding: 0.25rem;
+  border: none;
+  width: 3em;
+  -moz-appearance: textfield;
+  text-align: center;
+  background: inherit;
+  background: rgba(212, 212, 212, 0.425);
+}
+
+.number-left:hover::before, .number-right:hover::after {
+  background-color: #666666;
+}
+
+.background {
+  background-color: rgba(0,0,0,0.12);
+}
+
+/* From Uiverse.io by vinodjangid07 */
+
+.CartBtn {
+  width: 16em;
+  height: 40px;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--bs-secondary);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: .5s;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+}
+
+.IconContainer {
+  position: absolute;
+  left: -50px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  transition-duration: .5s;
+}
+
+.icon {
+  border-radius: 1px;
+}
+
+.text {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(17, 17, 17);
+  z-index: 1;
+  transition-duration: .5s;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.CartBtn:hover .IconContainer {
+  transform: translateX(58px);
+  border-radius: 40px;
+  transition-duration: .5s;
+  border: 1px solid var(--bs-navbar-disabled-color);
+  background: rgba(59, 121, 255, 0.541);
+  box-shadow: 0px 0px 14px #000;
+}
+
+.CartBtn:hover .text {
+  transform: translate(10px,0px);
+  transition-duration: .5s;
+  border: 1px solid var(--bs-navbar-disabled-color);
+  background: rgba(59, 121, 255, 0.541);
+  box-shadow: 0px 0px 14px #000;
+}
+
+.CartBtn:active {
+  transform: scale(0.95);
+  transition-duration: .5s;
+}
+
+.CartBtn:hover {
+  color: #000000;
+  border: 1px solid var(--bs-navbar-disabled-color);
+  background: rgba(112,32,27,0.76);
+  box-shadow: 0px 0px 18px rgba(147,147,147,0.52);
+}
+
+.fa.fa-cart-plus.cart {
+  box-sizing: border-box;
+  padding: 10px;
+  position: relative;
+  color: #000000;
+  text-align: center;
+  transition: background-color 1s;
+  right: 0;
+}
+
+.CartBtn:hover .fa.fa-cart-plus.cart {
+  animation: slope 1s linear infinite;
+}
+
+@keyframes slope {
+  0% {
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+  }
+}
+
+.tagliaButton {
+  appearance: none;
+  border: 1px solid;
+  width: 9em;
+  padding: 2px;
+}
+
+.tagliaButton:hover {
+  color: black;
+  border: 1px solid black;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.dialog.left {
+  display: block;
+  position: absolute;
+  bottom: auto;
+  width: 37%;
+  min-width: fit-content;
+  padding: 0px;
+  height: fit-content;
+  border-radius: 8px;
+  border: 1px solid black;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 3px;
+  overflow: scroll;
+  z-index: 0;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tagliaButton {
+  margin-bottom: 1em;
+}
+
+.product-container {
+  margin-top: 1em;
+  align-items: center;
+  padding: 1em;
+  background-color: rgba(152,121,91,0.31);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.14);
+  width: 80%;
+  flex-wrap: wrap;
+}
+
+#productName {
+  margin-bottom: 0.5em;
+}
+
+.selectLabel {
+  margin-top: 5.1px;
+  margin-right: 1em;
+}
+
+.productSelect {
+  border: 1px solid rgba(221,221,221,0.5);
+  border-radius: 5px;
+  padding: 1px;
+}
+
+#prezzoProdotto {
+  color: #982a65;
+  font-size: x-large;
+}
+
+.productNumberInput {
+  width: 3.5em;
+  margin-right: 2em;
+  border: 1px solid rgba(221,221,221,0.5);
+  border-radius: 5px;
+}
+
+.container {
+  margin-top: 2em;
+}
+
+.cardButton:hover {
+  border: none;
+  background: inherit;
+  box-shadow: none;
+}
+
