@@ -1,0 +1,485 @@
+unit Maincontroller;
+
+interface
+
+{$I dmvcframework.inc}
+
+uses
+  FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Phys.PG,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Stan.Param,
+  FireDAC.DatS,
+  FireDAC.DApt.Intf,
+  FireDAC.DApt,
+  Data.DB,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, DbU, System.SysUtils, System.Character, DateUtils,
+  System.RegularExpressions,
+  MVCFramework,
+  MVCFramework.Logger,
+  MVCFramework.Commons,
+  Web.HTTPApp, ClientiU,
+  System.JSON;
+
+type
+
+  [MVCPath('/')]
+  TApp1MainController = class(TMVCController)
+
+  public
+
+    [MVCPath('/')]
+    [MVCHTTPMethod([httpGET])]
+    procedure Index;
+
+    [MVCPath('/LogIn/($aEmail)/($aPsw)')]
+    [MVCHTTPMethod([httpPOST])]
+    procedure LogIn(aEmail, aPsw: String);
+
+
+    //categorie
+    [MVCPath('/AggiungiCategoria/($nome)/($idPadre)')]
+    [MVCHTTPMethod([httpGET])]
+    procedure AggiungiCategoria(nome: String; idPadre: SmallInt);
+
+    [MVCPath('/RemoveCategoria/($aId)')]
+    [MVCHTTPMethod([httpGET])]
+    procedure RemoveCategoria(aId: SmallInt);
+
+    [MVCPath('/GetCategoriesById/($aId)')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetCategoriesById(aId: SmallInt);
+
+
+    [MVCPath('/GetCategoriesOptions')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetCategoriesOptions();
+
+
+
+
+    //articoli
+    [MVCPath('/AggiungiArticolo/($aCategoria)/($aNome)/($aDescrizione)/($aColore)/($aCodice)/($aTaglie)/($aPrezzo)')
+      ]
+    [MVCHTTPMethod([httpGET])]
+    procedure AggiungiArticolo(aCategoria: SmallInt;
+      aNome, aDescrizione, aColore, aCodice, aTaglie: String; aPrezzo: Double);
+
+
+    [MVCPath('/GetListArticoli')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetListArticoli();
+
+    [MVCPath('/GetArticoloByCodice')]
+    [MVCHTTPMethod([httpGET])]
+    procedure GetArticoloByCodice(aCodice: String);
+
+
+    [MVCPath('/DeleteArticolo/($aId')]
+    [MVCHTTPMethod([httpGET])]
+    procedure DeleteArticolo(aId: String);
+
+  end;
+
+implementation
+
+uses MVCFramework.Serializer.JSONDataObjects,
+  MVCFramework.Serializer.Commons, JSONDataObjects, CategoriaU, ArticoliU;
+
+procedure TApp1MainController.Index;
+begin
+  render(200, 'ciaooooo');
+end;
+
+procedure TApp1MainController.LogIn(aEmail, aPsw: String);
+var
+  lCliente: TClienti;
+  JSONResponse: TJsonObject;
+  lToken: String;
+
+begin
+  lCliente := TClienti.Create;
+  JSONResponse := TJsonObject.Create;
+
+  try
+    lToken := lCliente.LogIn(aEmail, aPsw);
+
+    if (lToken <> '') then
+    begin
+      JSONResponse.S['Result'] := 'Bentornato amico!';
+      JSONResponse.S['token'] := lToken;
+      // Utilizza il metodo render per inviare la risposta JSON al client.
+      render(JSONResponse, false);
+    end
+    else
+    begin
+      JSONResponse.S['Result'] := 'Chi sei? Goku non lo sai!';
+      // Utilizza il metodo render con codice di stato 403 per indicare un accesso vietato.
+      render(403, JSONResponse, false);
+    end;
+
+  finally
+    JSONResponse.Free;
+    lCliente.Free;
+  end;
+end;
+
+
+
+procedure TApp1MainController.RemoveCategoria(aId: SmallInt);
+var
+    lCategoria : tCategoria;
+    JSONResponse: TJsonObject;
+begin
+
+lCategoria := tCategoria.Create;
+JSONResponse := TJsonObject.Create;
+
+
+try
+      if (lCategoria.remove(aId)) then
+        begin
+          // Se l'aggiunta ha successo, imposta un messaggio di successo nella risposta JSON.
+          JSONResponse.S['Result'] := 'Eliminazione avvenuta con successo';
+          // Utilizza il metodo render per inviare la risposta JSON al client.
+          render(JSONResponse, false);
+
+        end
+        else
+        begin
+          // Se l'aggiunta non ha successo (utente già esistente), imposta un messaggio di errore nella risposta JSON.
+          JSONResponse.S['Result'] := 'Rmozione non avvenuta perchè già esiste';
+          // Utilizza il metodo render con codice di stato 500 per indicare un errore del server.
+          render(500, JSONResponse, false);
+        end;
+finally
+      JSONResponse.Free;
+      lCategoria.Free;
+
+end;
+end;
+
+
+
+
+
+procedure TApp1MainController.AggiungiCategoria(nome: String;
+  idPadre: SmallInt);
+
+
+  var
+    lCategoria : tCategoria;
+    JSONResponse: TJsonObject;
+begin
+
+lCategoria := tCategoria.Create;
+JSONResponse := TJsonObject.Create;
+
+
+try
+      if (lCategoria.aggiungi(idPadre, nome)) then
+        begin
+          // Se l'aggiunta ha successo, imposta un messaggio di successo nella risposta JSON.
+          JSONResponse.S['Result'] := 'Aggiunta avvenuta con successo';
+          // Utilizza il metodo render per inviare la risposta JSON al client.
+          render(JSONResponse, false);
+
+        end
+        else
+        begin
+          // Se l'aggiunta non ha successo (utente già esistente), imposta un messaggio di errore nella risposta JSON.
+          JSONResponse.S['Result'] := 'Aggiunta non avvenuta perchè già esiste';
+          // Utilizza il metodo render con codice di stato 500 per indicare un errore del server.
+          render(500, JSONResponse, false);
+        end;
+finally
+      JSONResponse.Free;
+      lCategoria.Free;
+
+end;
+
+end;
+
+
+
+
+procedure TApp1MainController.GetCategoriesById(aId: SmallInt);
+var
+  lCategoria: tCategoria;
+  // Oggetto utente per gestire l'ottenimento della lista.
+  lFDQuery: tFDQuery; // Oggetto FDQuery per eseguire la query sul database.
+  lJSONArray: TJsonArray;
+  // Oggetto JSONArray per creare una lista di oggetti JSON.
+  lJSONRecord: TJsonObject;
+  // Oggetto JsonObject per rappresentare un singolo record JSON.
+
+begin
+
+   lCategoria := tCategoria.Create;
+   // Esecuzione della query per ottenere la lista degli utenti in base al filtro specificato.
+   lFDQuery := lCategoria.getList(aId);
+   if (lFDQuery <> nil) then
+   begin
+   // Creazione di un array JSON per contenere la lista degli utenti.
+   lJSONArray := TJsonArray.Create;
+
+   try
+   // Scorrimento dei record nella query.
+   while (not lFDQuery.Eof) do
+   begin
+   // Creazione di un oggetto JSON per rappresentare un singolo record.
+   lJSONRecord := TJsonObject.Create;
+   // Popolamento del record JSON con i dati del record corrente nella query.
+   lJSONRecord.I['id'] := lFDQuery.FieldByName('id').AsInteger;
+   lJSONRecord.S['nome'] := lFDQuery.FieldByName('nome').AsString;
+   lJSONRecord.S['id_padre'] := lFDQuery.FieldByName('id_padre').AsString;
+   //lJSONRecord.S['id_padre'] := lFDQuery.FieldByName('id_padre').AsString;
+   // Aggiunta del record JSON all'array JSON.
+   lJSONArray.Add(lJSONRecord);
+   // Passaggio al record successivo nella query.
+   lFDQuery.Next;
+   end;
+   // Invio dell'array JSON al client.
+   render(lJSONArray, false);
+   finally
+   // Libera le risorse allocate.
+   lJSONArray.Free;
+   lFDQuery.Free;
+   lCategoria.Free;
+   end;
+   end;
+end;
+
+procedure TApp1MainController.GetCategoriesOptions();
+var
+  lCategoria: tCategoria;
+  lFDQuery: tFDQuery; // Oggetto FDQuery per eseguire la query sul database.
+  lJSONArray: TJsonArray;
+  // Oggetto JSONArray per creare una lista di oggetti JSON.
+  lJSONRecord: TJsonObject;
+begin
+   lCategoria := tCategoria.Create;
+   lFDQuery := lCategoria.getOptions();
+   if (lFDQuery <> nil) then
+   begin
+   // Creazione di un array JSON per contenere la lista degli utenti.
+   lJSONArray := TJsonArray.Create;
+
+   try
+   // Scorrimento dei record nella query.
+   while (not lFDQuery.Eof) do
+   begin
+   // Creazione di un oggetto JSON per rappresentare un singolo record.
+   lJSONRecord := TJsonObject.Create;
+   // Popolamento del record JSON con i dati del record corrente nella query.
+   lJSONRecord.S['id'] := lFDQuery.FieldByName('id_sottocategoria').AsString;
+   lJSONRecord.S['nome_sottocategoria'] := lFDQuery.FieldByName('nome_sottocategoria').AsString;
+   lJSONRecord.S['nome_categoria_principale'] := lFDQuery.FieldByName('nome_categoria_principale').AsString;
+   // Aggiunta del record JSON all'array JSON.
+   lJSONArray.Add(lJSONRecord);
+   // Passaggio al record successivo nella query.
+   lFDQuery.Next;
+   end;
+   // Invio dell'array JSON al client.
+   render(lJSONArray, false);
+   finally
+   // Libera le risorse allocate.
+   lJSONArray.Free;
+   lFDQuery.Free;
+   lCategoria.Free;
+   end;
+   end;
+end;
+
+
+
+
+
+
+procedure TApp1MainController.GetListArticoli();
+var
+  lArticolo: tArticolo;
+  // Oggetto utente per gestire l'ottenimento della lista.
+  lFDQuery: tFDQuery; // Oggetto FDQuery per eseguire la query sul database.
+  lJSONArray: TJsonArray;
+  // Oggetto JSONArray per creare una lista di oggetti JSON.
+  lJSONRecord: TJsonObject;
+  // Oggetto JsonObject per rappresentare un singolo record JSON.
+
+begin
+  lArticolo := tArticolo.Create;
+
+  lFDQuery := lArticolo.getList();
+
+
+  if (lFDQuery <> nil) then
+  begin
+    lJSONArray := TJsonArray.Create;
+
+    try
+      while (not lFDQuery.Eof) do
+      begin
+        lJSONRecord := TJsonObject.Create;
+
+        // Popolamento del record JSON
+        lJSONRecord.S['codice'] := lFDQuery.FieldByName('codice').AsString;
+        lJSONRecord.S['nome'] := lFDQuery.FieldByName('nome').AsString;
+        lJSONRecord.S['descrizione'] := lFDQuery.FieldByName('descrizione').AsString;
+        lJSONRecord.S['colore'] := lFDQuery.FieldByName('colore').AsString;
+        lJSONRecord.I['categoria'] := lFDQuery.FieldByName('categoria').AsInteger;
+
+        // Conversione del valore float 'prezzo' in stringa con il punto come separatore decimale
+        lJSONRecord.S['prezzo'] := StringReplace(
+          FormatFloat('0.00', lFDQuery.FieldByName('prezzo').AsFloat), // Usa FormatFloat per formattare il numero
+          ',', '.', [rfReplaceAll]); // Sostituisce la virgola con il punto
+
+        lJSONRecord.S['taglie'] := lFDQuery.FieldByName('taglie').AsString;
+
+        // Aggiunta del record JSON all'array JSON
+        lJSONArray.Add(lJSONRecord);
+
+        // Passaggio al record successivo nella query
+        lFDQuery.Next;
+      end;
+
+      // Invio dell'array JSON al client
+      render(lJSONArray, false);
+    finally
+      lJSONArray.Free;
+      lFDQuery.Free;
+      lArticolo.Free;
+    end;
+  end;
+end;
+
+
+
+
+
+procedure TApp1MainController.GetArticoloByCodice(aCodice: String);
+var
+  lCategoria: tCategoria;
+  // Oggetto utente per gestire l'ottenimento della lista.
+  lFDQuery: tFDQuery; // Oggetto FDQuery per eseguire la query sul database.
+  lJSONArray: TJsonArray;
+  // Oggetto JSONArray per creare una lista di oggetti JSON.
+  lJSONRecord: TJsonObject;
+  // Oggetto JsonObject per rappresentare un singolo record JSON.
+
+begin
+
+   lCategoria := tCategoria.Create;
+   // Esecuzione della query per ottenere la lista degli utenti in base al filtro specificato.
+   lFDQuery := lCategoria.getList(aId);
+   if (lFDQuery <> nil) then
+   begin
+   // Creazione di un array JSON per contenere la lista degli utenti.
+   lJSONArray := TJsonArray.Create;
+
+   try
+   // Scorrimento dei record nella query.
+   while (not lFDQuery.Eof) do
+   begin
+   // Creazione di un oggetto JSON per rappresentare un singolo record.
+   lJSONRecord := TJsonObject.Create;
+   // Popolamento del record JSON con i dati del record corrente nella query.
+   lJSONRecord.I['id'] := lFDQuery.FieldByName('id').AsInteger;
+   lJSONRecord.S['nome'] := lFDQuery.FieldByName('nome').AsString;
+   lJSONRecord.S['id_padre'] := lFDQuery.FieldByName('id_padre').AsString;
+   //lJSONRecord.S['id_padre'] := lFDQuery.FieldByName('id_padre').AsString;
+   // Aggiunta del record JSON all'array JSON.
+   lJSONArray.Add(lJSONRecord);
+   // Passaggio al record successivo nella query.
+   lFDQuery.Next;
+   end;
+   // Invio dell'array JSON al client.
+   render(lJSONArray, false);
+   finally
+   // Libera le risorse allocate.
+   lJSONArray.Free;
+   lFDQuery.Free;
+   lCategoria.Free;
+   end;
+   end;
+end;
+
+
+
+
+procedure TApp1MainController.AggiungiArticolo(aCategoria: SmallInt;
+  aNome, aDescrizione, aColore, aCodice, aTaglie: String; aPrezzo: Double);
+
+  var
+    lArticolo : tArticolo;
+    JSONResponse: TJsonObject;
+begin
+  lArticolo := tArticolo.Create;
+  JSONResponse := TJsonObject.Create;
+
+
+try
+      if (lArticolo.aggiungi(aCategoria, aNome, aCodice, aDescrizione, aTaglie, aColore, aPrezzo)) then
+        begin
+          // Se l'aggiunta ha successo, imposta un messaggio di successo nella risposta JSON.
+          JSONResponse.S['Result'] := 'Aggiunta avvenuta con successo';
+          // Utilizza il metodo render per inviare la risposta JSON al client.
+          render(JSONResponse, false);
+
+        end
+        else
+        begin
+          // Se l'aggiunta non ha successo (utente già esistente), imposta un messaggio di errore nella risposta JSON.
+          JSONResponse.S['Result'] := 'Aggiunta non avvenuta perchè già esiste';
+          // Utilizza il metodo render con codice di stato 500 per indicare un errore del server.
+          render(500, JSONResponse, false);
+        end;
+finally
+      JSONResponse.Free;
+      lArticolo.Free;
+
+end;
+end;
+
+
+
+procedure TApp1MainController.DeleteArticolo(aId: String);
+var
+    lArticolo : tArticolo;
+    JSONResponse: TJsonObject;
+begin
+
+lArticolo := tArticolo.Create;
+JSONResponse := TJsonObject.Create;
+
+
+try
+      if (lArticolo.remove(aId)) then
+        begin
+          // Se l'aggiunta ha successo, imposta un messaggio di successo nella risposta JSON.
+          JSONResponse.S['Result'] := 'Eliminazione avvenuta con successo';
+          // Utilizza il metodo render per inviare la risposta JSON al client.
+          render(JSONResponse, false);
+
+        end
+        else
+        begin
+          // Se l'aggiunta non ha successo (utente già esistente), imposta un messaggio di errore nella risposta JSON.
+          JSONResponse.S['Result'] := 'Rmozione non avvenuta perchè già esiste';
+          // Utilizza il metodo render con codice di stato 500 per indicare un errore del server.
+          render(500, JSONResponse, false);
+        end;
+finally
+      JSONResponse.Free;
+      lArticolo.Free;
+
+end;
+end;
+
+end.
